@@ -2,7 +2,7 @@
 
 
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function Pad(props) {
 
@@ -11,8 +11,22 @@ export default function Pad(props) {
         audio.play()
     }
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === props.triggerKey) {
+                playSound();
+            }
+        };
+
+        document.body.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.body.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [props.triggerKey, props.link]);
+
     return (
-        <div className="pad" onClick={playSound}>
+        <div className="pad" onClick={playSound} tabIndex="0">
             {props.name}
         </div>
     )
