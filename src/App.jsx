@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import Pad from './Pad.jsx'
 
@@ -33,12 +33,16 @@ const kitUser = Array(9).fill().map((_, index) => ({
   triggerKey: ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c'][index]
 }))
 
-const kits = [kit1, kit2, kitUser]
 
 function App() {
   const [currentKitIndex, setCurrentKitIndex] = useState(0)
-  const [sounds, setSounds] = useState(kits[currentKitIndex])
   const [display, setDisplay] = useState('')
+  const [kits, setKits] = useState([kit1, kit2, kitUser])
+  const [sounds, setSounds] = useState(kits[currentKitIndex])
+
+  useEffect(() => {
+    setSounds(kits[currentKitIndex])
+  }, [currentKitIndex, kits])
 
   const updateDisplay = (name) => {
     setDisplay(name)
@@ -52,17 +56,33 @@ function App() {
 
   const updateSound = (index, link, name) => {
     setSounds((prevSounds) => {
-        const newSounds = [...prevSounds]
-        newSounds[index] = { ...newSounds[index], link, name }
-        return newSounds
+      const newSounds = [...prevSounds]
+      newSounds[index] = { ...newSounds[index], link, name }
+
+      setKits((prevKits) => {
+        const newKits = [...prevKits]
+        newKits[currentKitIndex] = newSounds
+        return newKits
+      })
+
+      return newSounds
     })
-    
-    setKits((prevKits) => {
-      const newKits = [...prevKits]
-      newKits[currentKitIndex] = [...prevSounds]
-      return newKits
-  })
-}
+  }
+
+  const updateStartTime = (index, newStartTime) => {
+    setSounds((prevSounds) => {
+      const newSounds = [...prevSounds]
+      newSounds[index] = { ...newSounds[index], startTime: newStartTime }
+
+      setKits((prevKits) => {
+        const newKits = [...prevKits]
+        newKits[currentKitIndex] = newSounds
+        return newKits
+      })
+
+      return newSounds
+    })
+  }
 
   return (
     <div id="drum-machine">
@@ -80,6 +100,7 @@ function App() {
             updateDisplay={updateDisplay}
             isCustomKit={currentKitIndex === 2}
             updateSound={updateSound}
+            updateStartTime={updateStartTime}
             index={index}
           />
         ))}
