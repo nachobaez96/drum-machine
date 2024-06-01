@@ -19,17 +19,23 @@ export default function Pad(props) {
             if (event.key === props.triggerKey) {
                 playSound()
             }
-        };
+        }
 
         document.body.addEventListener('keydown', handleKeyDown)
 
         return () => {
             document.body.removeEventListener('keydown', handleKeyDown)
         }
-    }, [props.triggerKey, props.link])
+    }, [props.triggerKey, props.link, startTime])
+
+    useEffect(() => {
+        setStartTime(props.startTime);
+      }, [props.startTime]);
 
     const handleStartTimeChange = (event) => {
-        setStartTime(Number(event.target.value))
+        const newStartTime = Number(event.target.value)
+        setStartTime(newStartTime)
+        props.updateStartTime(props.index, newStartTime)
     }
 
     const handleFileUpload = (event) => {
