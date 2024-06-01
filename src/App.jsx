@@ -26,7 +26,7 @@ const kit2 = [
   { name: "Yeet", link: "./assets/audio/kit2/Yeet.mp3", startTime: 0, triggerKey: 'c' }
 ]
 
-const kitUser = Array(9).fill().map((_, index) => ({
+const defaultKitUser = Array(9).fill().map((_, index) => ({
   name: "Upload",
   link: "",
   startTime: 0,
@@ -37,12 +37,19 @@ const kitUser = Array(9).fill().map((_, index) => ({
 function App() {
   const [currentKitIndex, setCurrentKitIndex] = useState(0)
   const [display, setDisplay] = useState('')
-  const [kits, setKits] = useState([kit1, kit2, kitUser])
+  const [kits, setKits] = useState(() => {
+    const savedKits = localStorage.getItem('drumKits')
+    return savedKits ? JSON.parse(savedKits) : [kit1, kit2, defaultKitUser]
+  })
   const [sounds, setSounds] = useState(kits[currentKitIndex])
 
   useEffect(() => {
     setSounds(kits[currentKitIndex])
   }, [currentKitIndex, kits])
+
+  useEffect(() => {
+    localStorage.setItem('drumKits', JSON.stringify(kits));
+  }, [kits]);
 
   const updateDisplay = (name) => {
     setDisplay(name)
