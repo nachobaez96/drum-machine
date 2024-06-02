@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import Pad from './Pad.jsx'
+import Waveform from './Waveform';
 
 const kit1 = [
   { name: "Heater 1", link: "./assets/audio/Heater-1.mp3", startTime: 0, triggerKey: 'q' },
@@ -42,14 +43,15 @@ function App() {
     return savedKits ? JSON.parse(savedKits) : [kit1, kit2, defaultKitUser]
   })
   const [sounds, setSounds] = useState(kits[currentKitIndex])
+  const [currentSound, setCurrentSound] = useState(null);
 
   useEffect(() => {
     setSounds(kits[currentKitIndex])
   }, [currentKitIndex, kits])
 
   useEffect(() => {
-    localStorage.setItem('drumKits', JSON.stringify(kits));
-  }, [kits]);
+    localStorage.setItem('drumKits', JSON.stringify(kits))
+  }, [kits])
 
   const updateDisplay = (name) => {
     setDisplay(name)
@@ -108,11 +110,15 @@ function App() {
             isCustomKit={currentKitIndex === 2}
             updateSound={updateSound}
             updateStartTime={updateStartTime}
+            setCurrentSound={setCurrentSound}
             index={index}
           />
         ))}
       </div>
       <div className="display">{display}</div>
+      {currentSound ? (
+        <Waveform audioLink={currentSound.link} startTime={currentSound.startTime} />
+      ) : <div className='placeholder-container'></div>}
     </div>
   )
 }

@@ -140,3 +140,34 @@ body {
 .upload-button:active {
   background-color: #333;
 }
+
+.waveform-container {
+  margin-top: 20px; /* Adjust margin as needed */
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  background-color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waveform-container > div {
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder-container {
+  margin-top: 20px; /* Adjust margin as needed */
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  background-color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 24px;
+  min-height: 50px;
+}

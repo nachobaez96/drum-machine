@@ -1,7 +1,3 @@
-// Receives sound through state
-
-
-
 import React, { useEffect, useState } from 'react'
 
 export default function Pad(props) {
@@ -12,6 +8,7 @@ export default function Pad(props) {
         audio.currentTime = startTime
         audio.play()
         props.updateDisplay(props.name)
+        props.setCurrentSound({ link: props.link, startTime: startTime })
     }
 
     useEffect(() => {
@@ -32,10 +29,13 @@ export default function Pad(props) {
         setStartTime(props.startTime);
       }, [props.startTime]);
 
+      
+
     const handleStartTimeChange = (event) => {
         const newStartTime = Number(event.target.value)
         setStartTime(newStartTime)
         props.updateStartTime(props.index, newStartTime)
+        props.setCurrentSound({ link: props.link, startTime: newStartTime })
     }
 
     const handleFileUpload = (event) => {
@@ -43,6 +43,7 @@ export default function Pad(props) {
         if (file) {
             const fileURL = URL.createObjectURL(file)
             props.updateSound(props.index, fileURL, file.name)
+            props.setCurrentSound({ link: fileURL, startTime: 0 })
         }
     }
 
@@ -63,7 +64,7 @@ export default function Pad(props) {
                 type="number"
                 value={startTime}
                 onChange={handleStartTimeChange}
-                step="0.02"
+                step="0.01"
                 min="0"
             />
         </div>
