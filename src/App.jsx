@@ -1,97 +1,188 @@
-import React, { useState, useEffect } from 'react'
-import './App.css'
-import Pad from './Pad.jsx'
-import Waveform from './Waveform';
+import { useState, useEffect } from "react";
+import "./App.css";
+import Pad from "./Pad.jsx";
+import Waveform from "./Waveform";
 
 const kit1 = [
-  { name: "Heater 1", link: "./assets/audio/Heater-1.mp3", startTime: 0, triggerKey: 'q' },
-  { name: "Heater 2", link: "./assets/audio/Heater-2.mp3", startTime: 0, triggerKey: 'w' },
-  { name: "Heater 3", link: "./assets/audio/Heater-3.mp3", startTime: 0, triggerKey: 'e' },
-  { name: "Heater 4", link: "./assets/audio/Heater-4.mp3", startTime: 0, triggerKey: 'a' },
-  { name: "Clap", link: "./assets/audio/Clap.mp3", startTime: 0, triggerKey: 's' },
-  { name: "Open-HH", link: "./assets/audio/Open-HH.mp3", startTime: 0, triggerKey: 'd' },
-  { name: "Kick-n'-Hat", link: "./assets/audio/Kick_n_Hat.mp3", startTime: 0, triggerKey: 'z' },
-  { name: "Kick", link: "./assets/audio/Kick.mp3", startTime: 0, triggerKey: 'x' },
-  { name: "Closed-HH", link: "./assets/audio/Closed-HH.mp3", startTime: 0, triggerKey: 'c' }
-]
+  {
+    name: "Heater 1",
+    link: "./assets/audio/Heater-1.mp3",
+    startTime: 0,
+    triggerKey: "q",
+  },
+  {
+    name: "Heater 2",
+    link: "./assets/audio/Heater-2.mp3",
+    startTime: 0,
+    triggerKey: "w",
+  },
+  {
+    name: "Heater 3",
+    link: "./assets/audio/Heater-3.mp3",
+    startTime: 0,
+    triggerKey: "e",
+  },
+  {
+    name: "Heater 4",
+    link: "./assets/audio/Heater-4.mp3",
+    startTime: 0,
+    triggerKey: "a",
+  },
+  {
+    name: "Clap",
+    link: "./assets/audio/Clap.mp3",
+    startTime: 0,
+    triggerKey: "s",
+  },
+  {
+    name: "Open-HH",
+    link: "./assets/audio/Open-HH.mp3",
+    startTime: 0,
+    triggerKey: "d",
+  },
+  {
+    name: "Kick-n'-Hat",
+    link: "./assets/audio/Kick_n_Hat.mp3",
+    startTime: 0,
+    triggerKey: "z",
+  },
+  {
+    name: "Kick",
+    link: "./assets/audio/Kick.mp3",
+    startTime: 0,
+    triggerKey: "x",
+  },
+  {
+    name: "Closed-HH",
+    link: "./assets/audio/Closed-HH.mp3",
+    startTime: 0,
+    triggerKey: "c",
+  },
+];
 
 const kit2 = [
-  { name: "Alert", link: "./assets/audio/kit2/Alert.mp3", startTime: 0, triggerKey: 'q' },
-  { name: "Boom", link: "./assets/audio/kit2/Boom.mp3", startTime: 0, triggerKey: 'w' },
-  { name: "Dolphin", link: "./assets/audio/kit2/Dolphin.mp3", startTime: 0, triggerKey: 'e' },
-  { name: "Glass", link: "./assets/audio/kit2/Glass.mp3", startTime: 0, triggerKey: 'a' },
-  { name: "Reload", link: "./assets/audio/kit2/Reload.mp3", startTime: 0, triggerKey: 's' },
-  { name: "Rubber-Duck", link: "./assets/audio/kit2/Rubber-Duck.mp3", startTime: 0, triggerKey: 'd' },
-  { name: "Slap", link: "./assets/audio/kit2/Slap.mp3", startTime: 0, triggerKey: 'z' },
-  { name: "Wilhelm", link: "./assets/audio/kit2/Wilhelm.mp3", startTime: 0, triggerKey: 'x' },
-  { name: "Yeet", link: "./assets/audio/kit2/Yeet.mp3", startTime: 0, triggerKey: 'c' }
-]
+  {
+    name: "Alert",
+    link: "./assets/audio/kit2/Alert.mp3",
+    startTime: 0,
+    triggerKey: "q",
+  },
+  {
+    name: "Boom",
+    link: "./assets/audio/kit2/Boom.mp3",
+    startTime: 0,
+    triggerKey: "w",
+  },
+  {
+    name: "Dolphin",
+    link: "./assets/audio/kit2/Dolphin.mp3",
+    startTime: 0,
+    triggerKey: "e",
+  },
+  {
+    name: "Glass",
+    link: "./assets/audio/kit2/Glass.mp3",
+    startTime: 0,
+    triggerKey: "a",
+  },
+  {
+    name: "Reload",
+    link: "./assets/audio/kit2/Reload.mp3",
+    startTime: 0,
+    triggerKey: "s",
+  },
+  {
+    name: "Rubber-Duck",
+    link: "./assets/audio/kit2/Rubber-Duck.mp3",
+    startTime: 0,
+    triggerKey: "d",
+  },
+  {
+    name: "Slap",
+    link: "./assets/audio/kit2/Slap.mp3",
+    startTime: 0,
+    triggerKey: "z",
+  },
+  {
+    name: "Wilhelm",
+    link: "./assets/audio/kit2/Wilhelm.mp3",
+    startTime: 0,
+    triggerKey: "x",
+  },
+  {
+    name: "Yeet",
+    link: "./assets/audio/kit2/Yeet.mp3",
+    startTime: 0,
+    triggerKey: "c",
+  },
+];
 
-const defaultKitUser = Array(9).fill().map((_, index) => ({
-  name: "Upload",
-  link: "",
-  startTime: 0,
-  triggerKey: ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c'][index]
-}))
-
+const defaultKitUser = Array(9)
+  .fill()
+  .map((_, index) => ({
+    name: "Upload",
+    link: "",
+    startTime: 0,
+    triggerKey: ["q", "w", "e", "a", "s", "d", "z", "x", "c"][index],
+  }));
 
 function App() {
-  const [currentKitIndex, setCurrentKitIndex] = useState(0)
-  const [display, setDisplay] = useState('')
+  const [currentKitIndex, setCurrentKitIndex] = useState(0);
+  const [display, setDisplay] = useState("");
   const [kits, setKits] = useState(() => {
-    const savedKits = localStorage.getItem('drumKits')
-    return savedKits ? JSON.parse(savedKits) : [kit1, kit2, defaultKitUser]
-  })
-  const [sounds, setSounds] = useState(kits[currentKitIndex])
+    const savedKits = localStorage.getItem("drumKits");
+    return savedKits ? JSON.parse(savedKits) : [kit1, kit2, defaultKitUser];
+  });
+  const [sounds, setSounds] = useState(kits[currentKitIndex]);
   const [currentSound, setCurrentSound] = useState(null);
 
   useEffect(() => {
-    setSounds(kits[currentKitIndex])
-  }, [currentKitIndex, kits])
+    setSounds(kits[currentKitIndex]);
+  }, [currentKitIndex, kits]);
 
   useEffect(() => {
-    localStorage.setItem('drumKits', JSON.stringify(kits))
-  }, [kits])
+    localStorage.setItem("drumKits", JSON.stringify(kits));
+  }, [kits]);
 
   const updateDisplay = (name) => {
-    setDisplay(name)
-  }
+    setDisplay(name);
+  };
 
   const switchKit = () => {
-    const nextIndex = (currentKitIndex + 1) % kits.length
-    setCurrentKitIndex(nextIndex)
-    setSounds(kits[nextIndex])
-  }
+    const nextIndex = (currentKitIndex + 1) % kits.length;
+    setCurrentKitIndex(nextIndex);
+    setSounds(kits[nextIndex]);
+  };
 
   const updateSound = (index, link, name) => {
     setSounds((prevSounds) => {
-      const newSounds = [...prevSounds]
-      newSounds[index] = { ...newSounds[index], link, name }
+      const newSounds = [...prevSounds];
+      newSounds[index] = { ...newSounds[index], link, name };
 
       setKits((prevKits) => {
-        const newKits = [...prevKits]
-        newKits[currentKitIndex] = newSounds
-        return newKits
-      })
+        const newKits = [...prevKits];
+        newKits[currentKitIndex] = newSounds;
+        return newKits;
+      });
 
-      return newSounds
-    })
-  }
+      return newSounds;
+    });
+  };
 
   const updateStartTime = (index, newStartTime) => {
     setSounds((prevSounds) => {
-      const newSounds = [...prevSounds]
-      newSounds[index] = { ...newSounds[index], startTime: newStartTime }
+      const newSounds = [...prevSounds];
+      newSounds[index] = { ...newSounds[index], startTime: newStartTime };
 
       setKits((prevKits) => {
-        const newKits = [...prevKits]
-        newKits[currentKitIndex] = newSounds
-        return newKits
-      })
+        const newKits = [...prevKits];
+        newKits[currentKitIndex] = newSounds;
+        return newKits;
+      });
 
-      return newSounds
-    })
-  }
+      return newSounds;
+    });
+  };
 
   return (
     <div id="drum-machine">
@@ -117,10 +208,15 @@ function App() {
       </div>
       <div className="display">{display}</div>
       {currentSound ? (
-        <Waveform audioLink={currentSound.link} startTime={currentSound.startTime} />
-      ) : <div className='placeholder-container'></div>}
+        <Waveform
+          audioLink={currentSound.link}
+          startTime={currentSound.startTime}
+        />
+      ) : (
+        <div className="placeholder-container"></div>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,4 +1,4 @@
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 body {
   font-family: Arial, sans-serif;
@@ -32,7 +32,7 @@ body {
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   padding: 10px 20px;
   text-transform: uppercase;
   transition: background-color 0.2s ease;
@@ -76,10 +76,27 @@ body {
   position: relative;
 }
 
-.pad:active {
+.pad:active,
+.pad.pressed {
   background-color: #666;
   box-shadow: 0 2px #666;
   transform: translateY(4px);
+}
+
+.pad-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px; /* Adjust this value based on your design */
+  display: block;
+}
+
+.pad.no-audio {
+  background-color: #6b6b6b;
+}
+
+.pad.no-audio .pad-name {
+  color: rgb(211, 211, 211);
 }
 
 .display {
@@ -95,20 +112,54 @@ body {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
+.controls-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 5px;
+}
+
+.controls-container.center-controls {
+  justify-content: center;
+  padding: 0;
+  width: 80%;
+}
+
 .pad input {
-  width: 50%;
+  width: 60%; /* Adjust based on your design */
   padding: 3px;
   border: none;
   border-radius: 3px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
   font-size: 14px;
   text-align: center;
+}
+/* box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  text-align: center;
   position: absolute;
   bottom: 5px;
-}
+} */
 
 .upload-button {
-  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 20px;
+  background-color: #555;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 5px; /* Space between input and upload button */
+}
+/* position: absolute;
   top: 5px;
   left: 50%;
   transform: translateX(-50%);
@@ -123,7 +174,7 @@ body {
   font-size: 12px;
   text-align: center;
   cursor: pointer;
-}
+} */
 
 .upload-button input {
   display: none;
